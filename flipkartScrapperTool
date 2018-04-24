@@ -22,7 +22,7 @@ if __name__=="__main__":
     # get request for url
     req = requests.get("https://www.flipkart.com/search?as=on&as-show=on&count=40&otracker=start&p%5B%5D=sort%3Dpopularity&page=1&q=kids+bags&sid=d69%2Fthr%2Fwsp&viewType=grid",headers=agent)
 
-
+    # Beautiful soup configration
     soup = BeautifulSoup(req.content,"html.parser")
 
     # Loop for scrapping the code
@@ -49,17 +49,26 @@ if __name__=="__main__":
 import requests
 import csv
 from bs4 import BeautifulSoup
+
 writer = csv.writer(open("/Users/ShreeThaanu/Desktop/ProductsInFlipkart/bbyBag.csv", 'a'))
+
 if __name__=="__main__":
+    
     agent = {'User-Agent': 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405'}
+
 for letter in range(1,50):     
+
     req = requests.get("https://www.flipkart.com/search?as=on&as-show=on&count=40&otracker=start&p%5B%5D=sort%3Dpopularity&page=" + str(letter) + "&q=kids+bags&sid=d69%2Fthr%2Fwsp&viewType=grid",headers=agent)
 #  req.content = html page source and we are using the html parser
+
     # First Example   
+
     soup = BeautifulSoup(req.content,"html.parser")
+
     for i in soup.find_all("",class_="_2cLu-l"):
        print(i.text)   
        writer.writerow([i.text])
+
     for j in soup.find_all("",class_="_1vC4OE"):
        print(j.text)   
        writer.writerow([j.text])
