@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Apr 23 15:55:25 2018
+
+@author: ShreeThaanu
+"""
+
+import requests
+import csv
+from bs4 import BeautifulSoup
+
+# This code creates the csv file in the location.
+writer = csv.writer(open("/Users/ShreeThaanu/Desktop/newabe.csv", 'a'))
+
+# Min function call
+if __name__=="__main__":
+   
+    # setting up user agent
+    agent = {'User-Agent': 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405'}
+    
+    # get request for url
+    req = requests.get("https://www.flipkart.com/search?as=on&as-show=on&count=40&otracker=start&p%5B%5D=sort%3Dpopularity&page=1&q=kids+bags&sid=d69%2Fthr%2Fwsp&viewType=grid",headers=agent)
+
+
+    soup = BeautifulSoup(req.content,"html.parser")
+
+    # Loop for scrapping the code
+    for i in soup.find_all("",class_="_2cLu-l"):
+       print(i.text)   
+       writer.writerow([i.text])
+
+    for j in soup.find_all("",class_="_1vC4OE"):
+       print(j.text)   
+       writer.writerow([j.text])
+
+    for k in soup.find_all("",class_="hGSR34 _2beYZw"):
+       print(k.text)   
+       writer.writerow([k.text])  
+
+    for l in soup.find_all("",class_="_38sUEc"):
+       print(l.text)   
+       writer.writerow([l.text])
+       
+
+# For scraping from all pages use the below code 
+       
+"""
+import requests
+import csv
+from bs4 import BeautifulSoup
+writer = csv.writer(open("/Users/ShreeThaanu/Desktop/ProductsInFlipkart/bbyBag.csv", 'a'))
+if __name__=="__main__":
+    agent = {'User-Agent': 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405'}
+for letter in range(1,50):     
+    req = requests.get("https://www.flipkart.com/search?as=on&as-show=on&count=40&otracker=start&p%5B%5D=sort%3Dpopularity&page=" + str(letter) + "&q=kids+bags&sid=d69%2Fthr%2Fwsp&viewType=grid",headers=agent)
+#  req.content = html page source and we are using the html parser
+    # First Example   
+    soup = BeautifulSoup(req.content,"html.parser")
+    for i in soup.find_all("",class_="_2cLu-l"):
+       print(i.text)   
+       writer.writerow([i.text])
+    for j in soup.find_all("",class_="_1vC4OE"):
+       print(j.text)   
+       writer.writerow([j.text])
+    for k in soup.find_all("",class_="hGSR34 _2beYZw"):
+       print(k.text)   
+       writer.writerow([k.text])  
+    for l in soup.find_all("",class_="_38sUEc"):
+       print(l.text)   
+       writer.writerow([l.text])
+       
+       """
